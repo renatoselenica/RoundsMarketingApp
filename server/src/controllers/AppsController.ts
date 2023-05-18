@@ -62,7 +62,7 @@ async function createScreenshot(request: FastifyRequest<{ Body: IGetApp }>, repl
     if (!appPackage) {
       throw new Error('package does not exist');
     }
-    await screenshot(appPackage.packageUrl, `${appPackage.packageName}-${Date.now()}`);
+    await screenshot(appPackage.packageUrl, appPackage.packageName);
     reply.status(200);
     reply.send({ success: true, message: 'Screenshot added successfully' });
   } catch (err) {

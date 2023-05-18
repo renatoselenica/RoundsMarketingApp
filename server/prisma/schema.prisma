@@ -6,7 +6,7 @@ datasource db {
   provider = "sqlite"
   // the url of the database would be in an .env variable normally,
   // but in this case we can place it here for flexbility of testing the app
-  url      = "file:../src/data/dev.db"
+  url      = "file:../data/dev.db"
 }
 
 model Package {

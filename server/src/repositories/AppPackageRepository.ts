@@ -84,9 +84,24 @@ async function findAppByPackageName(packageName: string) {
   }
 }
 
+async function insertScreenshot(packageName: string, screenshotPath: string) {
+  try {
+    await db.screenshot.create({
+      data: {
+        screenshotPath: screenshotPath,
+        packageId: packageName,
+      }
+    })
+  } catch (err) {
+    console.log(`Error on insertScreenshot: ${err}`);
+    throw err;
+  }
+}
+
 export default {
   findAppsWithScreenshotNumber,
   findAppWithScreenshots,
   findAppByPackageName,
   insertApp,
+  insertScreenshot
 }

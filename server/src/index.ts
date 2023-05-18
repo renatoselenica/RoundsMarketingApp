@@ -1,15 +1,21 @@
 import fastify from "fastify";
+import * as path from "path";
+import staticServe from "@fastify/static";
 import AppsController from "./controllers/AppsController";
 import HealthController from "./controllers/HealthController";
 
 async function bootstrap() {
   const server = fastify({ logger: true });
-
   // Set up the Fastify error handler
   server.setErrorHandler(async (error, request, reply) => {
-    // Log the error to Sentry later on
+    // Error logging can be setup with BugSnag or Sentry
     server.log.error({ error, request, reply });
   });
+
+  // Serve Images for the front end
+  server.register(staticServe, {
+    root: path.join(__dirname, '..', '/public'),
+  })
 
   // Routes
   // The route registration can be moved to a different file and looped over without having to increase the size of the index file
