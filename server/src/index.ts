@@ -15,8 +15,9 @@ async function bootstrap() {
   // The route registration can be moved to a different file and looped over without having to increase the size of the index file
   server.route({ method: "GET", url: "/health", handler: HealthController });
   server.route({ method: "GET", url: "/apps/getApps", handler: AppsController.getApps });
-  server.route({ method: "GET", url: "/apps/getApp", handler: AppsController.getApp });
+  server.route({ method: "GET", url: "/apps/getApp/:packageName", handler: AppsController.getApp });
   server.route({ method: "POST", url: "/apps/addApp", handler: AppsController.addApp });
+  server.route({ method: "POST", url: "/apps/createScreenshot", handler: AppsController.createScreenshot });
   // End Routes
 
   server.listen({ port: 4000 }, (err, address) => {
