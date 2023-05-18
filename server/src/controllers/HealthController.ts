@@ -1,8 +1,6 @@
-import { FastifyInstance } from "fastify";
+import { FastifyReply, FastifyRequest } from "fastify";
 
-export default async function HealthController(fastify: FastifyInstance) {
-  fastify.get("/health", async (_request, reply) => {
-    reply.status(200);
-    reply.send({ success: true, health: 'okay' });
-  });
+export default function HealthController(_request: FastifyRequest, reply: FastifyReply) {
+  reply.status(200);
+  reply.send({ success: true, health: 'okay' });
 }

@@ -1,0 +1,27 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  // the url of the database would be in an .env variable normally,
+  // but in this case we can place it here for flexbility of testing the app
+  url      = "file:../src/data/dev.db"
+}
+
+model Package {
+  packageName String       @id @unique
+  packageUrl  String
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  screenshots Screenshot[]
+}
+
+model Screenshot {
+  id             String   @id @default(uuid())
+  screenshotPath String
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  Package        Package  @relation(fields: [packageId], references: [packageName])
+  packageId      String
+}
