@@ -21,7 +21,6 @@ class Scheduler {
           return;
         }
 
-        console.log('Wut');
         apps.forEach((app) => {
           screenshot(app.packageUrl, app.packageName);
         });
