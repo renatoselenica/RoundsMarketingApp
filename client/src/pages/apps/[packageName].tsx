@@ -20,6 +20,11 @@ export default function AppPage() {
   const router = useRouter();
   const packageName = router.query.packageName as string;
   const [appData, setAppData] = useState<GetAppResponse | null>(null);
+  const [fullscreenImageSrc, setFullscreenImageSrc] = useState<string | null>(null);
+
+  const handleClick = (src: string) => {
+    setFullscreenImageSrc(fullscreenImageSrc === src ? null : src);
+  };
 
   useEffect(() => {
     let ignore = false;
@@ -74,12 +79,25 @@ export default function AppPage() {
             </span>
           </p>
           <Image
+            onClick={() => handleClick(screenshot.screenshotPath)}
             className="w-full rounded-sm shadow-lg"
             width={1080}
             height={1920}
             src={screenshot.screenshotPath}
             alt="screenshot"
           />
+          <div
+            className={`fixed bg-gray-900 inset-0 flex items-center justify-center transition-all duration-500 ease-in-out ${screenshot.screenshotPath === fullscreenImageSrc ? 'opacity-100 visible' : 'opacity-0 invisible'}`}
+            onClick={() => handleClick(screenshot.screenshotPath)}
+          >
+            <Image
+              src={screenshot.screenshotPath}
+              width={1080}
+              height={1920}
+              alt="full view"
+              className={`w-screen h-screen p-16 object-contain transition-transform duration-500 ease-in-out ${screenshot.screenshotPath === fullscreenImageSrc ? 'scale-100' : 'scale-0'}`}
+            />
+          </div>
         </div>
       ))}
     </main>

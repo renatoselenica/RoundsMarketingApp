@@ -13,6 +13,19 @@ module.exports = {
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
     },
+    transitionProperty: {
+      'spacing': 'margin, padding',
+      'height': 'height',
+      'spacing': 'margin, padding',
+    },
+    scale: {
+      '0': '0',
+    },
+    opacity: {
+      '0': '0',
+      '100': '1',
+    },
+    visibility: ['responsive', 'hover', 'focus', 'group-hover'],
   },
   plugins: [],
 }

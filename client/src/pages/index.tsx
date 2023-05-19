@@ -36,7 +36,7 @@ function MonitorTable({ packageList }: { packageList: GetAppsResponse[] }) {
                 <td className="py-2 px-4 text-center border">
                   {item._count.screenshots}
                 </td>
-                <td className="py-2 px-4 border">
+                <td className="py-2 px-4 text-center border">
                   <Link href={`/apps/${item.packageName}`}>
                     <button
                       className="py-2 px-4 m-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700"
