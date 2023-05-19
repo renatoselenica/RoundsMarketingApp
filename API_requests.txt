@@ -1,0 +1,32 @@
+POST /apps/add-app HTTP/1.1
+Content-Type: application/json; charset=utf-8
+Host: localhost:4000
+Connection: close
+User-Agent: RapidAPI/4.2.0 (Macintosh; OS X/12.6.5) GCDHTTPRequest
+Content-Length: 101
+
+{"packageUrl":"https://play.google.com/store/apps/details?id=com.feralinteractive.railroads_android"}
+
+POST /apps/create-screenshot HTTP/1.1
+Content-Type: application/json; charset=utf-8
+Host: localhost:4000
+Connection: close
+User-Agent: RapidAPI/4.2.0 (Macintosh; OS X/12.6.5) GCDHTTPRequest
+Content-Length: 34
+
+{"packageName":"com.hg.wreckfest"}
+
+GET /apps/getApps HTTP/1.1
+Host: localhost:4000
+Connection: close
+User-Agent: RapidAPI/4.2.0 (Macintosh; OS X/12.6.5) GCDHTTPRequest
+
+
+
+GET /apps/get-app?packageName=com.feralinteractive.railroads_android HTTP/1.1
+Host: localhost:4000
+Connection: close
+User-Agent: RapidAPI/4.2.0 (Macintosh; OS X/12.6.5) GCDHTTPRequest
+
+
+
