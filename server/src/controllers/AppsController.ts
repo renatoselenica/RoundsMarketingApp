@@ -1,6 +1,6 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 import { URL } from "url";
-import { IAddApp, IGetApp } from "../interfaces/IAddApp";
+import { IAddApp, IGetApp } from "../types/interfaces";
 import { screenshot } from "../services/PuppeteerService";
 import AppPackageRepository from "../repositories/AppPackageRepository";
 
@@ -16,27 +16,27 @@ async function getApps(request: FastifyRequest, reply: FastifyReply) {
   }
 }
 
-async function getApp(request: FastifyRequest<{ Params: IGetApp }>, reply: FastifyReply) {
-  const { packageName } = request.params;
+async function getApp(request: FastifyRequest<{ Querystring: IGetApp }>, reply: FastifyReply) {
+  const { packageName } = request.query;
   try {
     const app = await AppPackageRepository.findAppWithScreenshots(packageName);
+
+    if (!app) {
+      reply.status(404);
+      reply.send({ success: false, message: 'Package does not exist' });
+    }
     reply.status(200);
     reply.send({ success: true, message: 'Package retrieved successfully', data: app });
   } catch (err) {
     request.log.error({ err }, "An error has happened");
     reply.status(500);
-    reply.send({ success: false, message: 'There was an error with adding the package' });
+    reply.send({ success: false, message: 'There was an error with finding the package' });
   }
 }
 
 async function addApp(request: FastifyRequest<{ Body: IAddApp }>, reply: FastifyReply) {
   const packageUrl = request.body.packageUrl;
-  // TODO: validation
   const packageName = new URL(packageUrl).searchParams.get("id") as string;
-  if (!packageName) {
-    reply.status(200);
-    reply.send({ message: "Google play link must contain an ID" })
-  }
 
   try {
     await AppPackageRepository.insertApp(packageName, packageUrl);
@@ -51,11 +51,6 @@ async function addApp(request: FastifyRequest<{ Body: IAddApp }>, reply: Fastify
 
 async function createScreenshot(request: FastifyRequest<{ Body: IGetApp }>, reply: FastifyReply) {
   const packageName = request.body.packageName;
-  // TODO: validation
-  if (!packageName) {
-    reply.status(200);
-    reply.send({ message: "Package Name is obligatory" })
-  }
 
   try {
     const appPackage = await AppPackageRepository.findAppByPackageName(packageName);
