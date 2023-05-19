@@ -28,7 +28,8 @@ async function bootstrap() {
   server.route({ method: "POST", url: "/apps/create-screenshot", preHandler: Validator.validateAddScreenshot, handler: AppsController.createScreenshot });
   // End Routes
 
-  const scheduler = new Scheduler();
+  // Start background scheduler to take screenshots
+  const scheduler = new Scheduler(5);
   scheduler.startTask();
 
   server.addHook('onClose', (_instance, done) => {

@@ -5,9 +5,11 @@ import { screenshot } from "../services/PuppeteerService";
 
 class Scheduler {
   private scheduler: ToadScheduler;
+  private timer: number = 1;
 
-  constructor() {
+  constructor(timer: number) {
     this.scheduler = new ToadScheduler();
+    this.timer = timer;
   }
 
   public startTask() {
@@ -19,6 +21,7 @@ class Scheduler {
           return;
         }
 
+        console.log('Wut');
         apps.forEach((app) => {
           screenshot(app.packageUrl, app.packageName);
         });
@@ -29,7 +32,7 @@ class Scheduler {
       }
     );
 
-    const job = new SimpleIntervalJob({ minutes: 15 }, task);
+    const job = new SimpleIntervalJob({ minutes: this.timer }, task);
     this._addSimpleIntervalJob(job);
   }
 

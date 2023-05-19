@@ -5,7 +5,7 @@
   "main": "lib/index.js",
   "scripts": {
     "build": "tsc -p tsconfig.json",
-    "prod:run": "node lib/index.js",
+    "prod:run": "tsc -p tsconfig.json && node lib/index.js",
     "watch": "tsc --watch",
     "start": "nodemon src/index.ts"
   },

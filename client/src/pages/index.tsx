@@ -17,6 +17,7 @@ type GetAppsResponse = {
   _count: ScreenshotsCount;
 };
 
+// component was not moved to different file as the file is still not very large and its easier to follow context
 function MonitorTable({ packageList }: { packageList: GetAppsResponse[] }) {
   return (
     <>
