@@ -18,7 +18,7 @@ export async function screenshot(packageUrl: string, packageName: string): Promi
       path: imagePath,
     });
 
-    await AppPackageRepository.insertScreenshot(packageName, `screenshots/${fileName}`);
+    await AppPackageRepository.insertScreenshot(packageName, `/screenshots/${fileName}`);
   } catch (err) {
     console.log(`Error on puppeteer service: ${err}`);
   } finally {

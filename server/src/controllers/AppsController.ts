@@ -19,7 +19,7 @@ async function getApps(request: FastifyRequest, reply: FastifyReply) {
 async function getApp(request: FastifyRequest<{ Params: IGetApp }>, reply: FastifyReply) {
   const { packageName } = request.params;
   try {
-    const app = await AppPackageRepository.findAppByPackageName(packageName);
+    const app = await AppPackageRepository.findAppWithScreenshots(packageName);
     reply.status(200);
     reply.send({ success: true, message: 'Package retrieved successfully', data: app });
   } catch (err) {
