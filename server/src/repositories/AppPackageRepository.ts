@@ -84,6 +84,21 @@ async function findAppByPackageName(packageName: string) {
   }
 }
 
+async function findAllApps() {
+  try {
+    const apps = await db.package.findMany({
+      select: {
+        packageName: true,
+        packageUrl: true,
+      }
+    });
+    return apps;
+  } catch (err) {
+    console.log(`Error on findAppByPackageName: ${err}`);
+    throw err;
+  }
+}
+
 async function insertScreenshot(packageName: string, screenshotPath: string) {
   try {
     await db.screenshot.create({
@@ -102,6 +117,7 @@ export default {
   findAppsWithScreenshotNumber,
   findAppWithScreenshots,
   findAppByPackageName,
+  findAllApps,
   insertApp,
   insertScreenshot
 }
