@@ -98,10 +98,10 @@ npm install
 
 ## Improvements to the implementation
 
-- While implementing the solution there were a few elements I wanted to improve, with time
+- While implementing the solution there were a few elements I wanted to improve, with time.
 - Validations can be performed using json schemas in fastify and be integrated with a tools such as zod for better mapping of errors. Mapping response and request via the json schema increases fastifies throughput as well.
 - The controlers, services, and repositories can be implemented in using a `Class` pattern even tho its just decorating in javascript, I think it offers a good structure nonetheless.
-- The services and repositories should be singletons. Javascript is very memory hungry and reusing objects is very efficient when a secondary instance of those objects is not needed
-- Logging on the app can be setup globally so a logger instance is available to all Classes
-- Fetch requests in Nextjs on the clientside can be substituted with react query, or swr for more efficient error, loading states, less footguns due to UseEffect and easier functionality
+- The services and repositories should be singletons. Javascript is very memory hungry and reusing objects is very efficient when a secondary instance of those objects is not needed.
+- Logging on the app can be setup globally so a logger instance is available to all Classes.
+- Fetch requests in Nextjs on the clientside can be substituted with react query, or swr for more efficient error, loading states, less footguns due to UseEffect and easier functionality.
 - Some data on the client side can be loaded in SSR mode from Next, without having to rely on client side fetching. `getServerSideProps` can be performed on initial requests to build and populate the HTML from the server, in order to increase performance.
