@@ -13,9 +13,12 @@
 
 - Go into the server folder and run the following commands
 ```bash
+cd server
+```
+```bash
 npm install
 ````
-- To sync the DB and create a DB file (in case there are issues with prisma, a DB file was set up at the root of the project as a backup)
+- To set up Prisma and create a sqlite file (in case there are issues with prisma, a DB file was set up at the root of the project as a backup)
  ```bash
  npx prisma db push
  ```
@@ -31,6 +34,9 @@ npm run start
 ### Client set up
 
 - Go into the client folder and run the following commands
+```bash
+cd client
+```
 ```bash
 npm install
 ````
