@@ -37,7 +37,7 @@ function MonitorTable({ packageList }: { packageList: GetAppsResponse[] }) {
                   {item._count.screenshots}
                 </td>
                 <td className="py-2 px-4 text-center border">
-                  <Link href={`/apps/${item.packageName}`}>
+                  <Link href={{ pathname: `/app-monitor`, query: { packageName: item.packageName } }}>
                     <button
                       className="py-2 px-4 m-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700"
                       type="submit"
