@@ -69,7 +69,7 @@ export default function AppPage() {
           {new Date(appData.createdAt).toUTCString()}
         </span>
       </p>
-      {appData.screenshots.map((screenshot) => (
+      {appData.screenshots.length !== 0 ? appData.screenshots.map((screenshot) => (
         <div key={screenshot.createdAt} className="flex flex-col items-center">
           <div className="my-14 w-full h-1 bg-gray-500 rounded-lg"></div>
           <p className="pb-4">
@@ -99,7 +99,9 @@ export default function AppPage() {
             />
           </div>
         </div>
-      ))}
+      )) :
+        <div className="py-12 text-center">There are no screenshots for the selected app</div>
+      }
     </main>
   );
 }
