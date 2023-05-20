@@ -2,6 +2,7 @@ import { ToadScheduler, SimpleIntervalJob, AsyncTask } from 'toad-scheduler';
 import AppPackageRepository from '../repositories/AppPackageRepository';
 import { IPackage } from '../types/interfaces';
 import { screenshot } from "../services/PuppeteerService";
+import Logger from "../services/LoggerService";
 
 class Scheduler {
   private scheduler: ToadScheduler;
@@ -17,7 +18,7 @@ class Scheduler {
     const task = new AsyncTask('screenshot job', () => {
       return AppPackageRepository.findAllApps().then((apps: IPackage[]) => {
         if (!apps) {
-          console.log('No apps found');
+          Logger.getInstance().error('No apps found');
           return;
         }
 
@@ -27,7 +28,7 @@ class Scheduler {
       });
     },
       (err: Error) => {
-        console.log(`Error on cron job service: ${err}`);
+        Logger.getInstance().error(`Error on cron job service: ${err}`);
       }
     );
 

@@ -1,5 +1,6 @@
 import { Prisma } from '@prisma/client';
 import { db } from '../utils/db.connection';
+import Logger from '../services/LoggerService';
 
 async function findAppsWithScreenshotNumber() {
   try {
@@ -16,7 +17,7 @@ async function findAppsWithScreenshotNumber() {
 
     return apps;
   } catch (err) {
-    console.log(`Error on findAppsWithScreenshotNumber: ${err}`);
+    Logger.getInstance().error(`Error on findAppsWithScreenshotNumber: ${err}`);
     throw err;
   }
 }
@@ -42,7 +43,7 @@ async function findAppWithScreenshots(packageName: string) {
 
     return app;
   } catch (err) {
-    console.log(`Error on findAppWithScreenshots: ${err}`);
+    Logger.getInstance().error(`Error on findAppWithScreenshots: ${err}`);
     throw err;
   }
 }
@@ -58,9 +59,9 @@ async function insertApp(packageName: string, packageUrl: string) {
   } catch (err) {
     if (err instanceof Prisma.PrismaClientKnownRequestError) {
       if (err.code === 'P2002') {
-        console.log('Record with package name already exists');
+        Logger.getInstance().error('Record with package name already exists');
       }
-      console.log(`Error on insertApp: ${err}`)
+      Logger.getInstance().error(`Error on insertApp: ${err}`)
     }
     throw new Error('Record with that package name already exists')
   }
@@ -79,7 +80,7 @@ async function findAppByPackageName(packageName: string) {
     });
     return appPackage;
   } catch (err) {
-    console.log(`Error on findAppByPackageName: ${err}`);
+    Logger.getInstance().error(`Error on findAppByPackageName: ${err}`);
     throw err;
   }
 }
@@ -94,7 +95,7 @@ async function findAllApps() {
     });
     return apps;
   } catch (err) {
-    console.log(`Error on findAppByPackageName: ${err}`);
+    Logger.getInstance().error(`Error on findAppByPackageName: ${err}`);
     throw err;
   }
 }
@@ -108,7 +109,7 @@ async function insertScreenshot(packageName: string, screenshotPath: string) {
       }
     })
   } catch (err) {
-    console.log(`Error on insertScreenshot: ${err}`);
+    Logger.getInstance().error(`Error on insertScreenshot: ${err}`);
     throw err;
   }
 }

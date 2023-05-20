@@ -6,6 +6,7 @@ import HealthController from "./controllers/HealthController";
 import Scheduler from "./services/CronService";
 import fastifySensible from "@fastify/sensible";
 import { addAppSchema, addAppScreenshot, getAppSchema } from "./schemas/AppSchema";
+import Logger from "./services/LoggerService";
 
 async function bootstrap() {
   const server = fastify({ logger: true });
@@ -15,6 +16,8 @@ async function bootstrap() {
     server.log.error(error);
     reply.send(error);
   });
+
+  new Logger(server.log);
 
   // Serve Images for the front end
   server.register(staticServe, {
@@ -33,8 +36,8 @@ async function bootstrap() {
   // End Routes
 
   // Start background scheduler to take screenshots
-  // const scheduler = new Scheduler(5);
-  // scheduler.startTask();
+  const scheduler = new Scheduler(15);
+  scheduler.startTask();
 
   server.addHook('onClose', (_instance, done) => {
     console.log('server is closing');
@@ -45,7 +48,7 @@ async function bootstrap() {
   process.on('SIGINT', () => {
     console.log('Received SIGINT. Process will exit...');
     server.close(() => {
-      // scheduler.stop();
+      scheduler.stop();
       console.log('server closed');
       process.exit(0);
     });
@@ -55,7 +58,7 @@ async function bootstrap() {
   process.on('SIGTERM', () => {
     console.log('Received SIGTERM. Process will exit...');
     server.close(() => {
-      // scheduler.stop();
+      scheduler.stop();
       console.log('server closed');
       process.exit(0);
     });
