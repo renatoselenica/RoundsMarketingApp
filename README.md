@@ -105,3 +105,4 @@ npm install
 - Logging on the app can be setup globally so a logger instance is available to all Classes.
 - Fetch requests in Nextjs on the clientside can be substituted with react query, or swr for more efficient error, loading states, less footguns due to UseEffect and easier functionality.
 - Some data on the client side can be loaded in SSR mode from Next, without having to rely on client side fetching. `getServerSideProps` can be performed on initial requests to build and populate the HTML from the server, in order to increase performance.
+- The Images should be moved to an object storage or s3 like storage instance
