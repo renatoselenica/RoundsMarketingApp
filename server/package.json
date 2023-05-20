@@ -13,6 +13,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@fastify/sensible": "^5.2.0",
     "@fastify/static": "^6.10.1",
     "@prisma/client": "^4.14.1",
     "date-fns": "^2.29.3",
