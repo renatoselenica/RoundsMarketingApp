@@ -62,7 +62,7 @@ async function insertApp(packageName: string, packageUrl: string) {
       }
       console.log(`Error on insertApp: ${err}`)
     }
-    throw err;
+    throw new Error('Record with that package name already exists')
   }
 }
 
