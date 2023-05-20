@@ -10,6 +10,12 @@ import { addAppSchema, addAppScreenshot, getAppSchema } from "./schemas/AppSchem
 async function bootstrap() {
   const server = fastify({ logger: true });
 
+  server.setErrorHandler((error, _request, reply) => {
+    // Can be used to set up BugSnag or Sentry
+    server.log.error(error);
+    reply.send(error);
+  });
+
   // Serve Images for the front end
   server.register(staticServe, {
     root: path.join(__dirname, '..', '/public'),
