@@ -4,6 +4,7 @@ import { IAddApp, IGetApp } from "../types/interfaces";
 import { screenshot } from "../services/PuppeteerService";
 import AppPackageRepository from "../repositories/AppPackageRepository";
 import validateUrl from "../utils/validateUrl";
+import { scheduleJob } from "node-schedule";
 
 async function getApps(_request: FastifyRequest, reply: FastifyReply) {
   const apps = await AppPackageRepository.findAppsWithScreenshotNumber();
@@ -27,7 +28,11 @@ async function addApp(request: FastifyRequest<{ Body: IAddApp }>, reply: Fastify
   }
 
   const packageName = new URL(packageUrl).searchParams.get("id") as string;
-  await AppPackageRepository.insertApp(packageName, packageUrl);
+  const appInserted = await AppPackageRepository.insertApp(packageName, packageUrl);
+  scheduleJob({ start: appInserted.createdAt, rule: '*/1 * * * *' }, async () => {
+    console.log('Adding screenshot', appInserted.packageName);
+    await screenshot(appInserted.packageUrl, appInserted.packageName);
+  });
   reply.send({ success: true, message: 'Package added successfully' });
 }
 

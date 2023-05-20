@@ -3,7 +3,7 @@ import * as path from "path";
 import staticServe from "@fastify/static";
 import AppsController from "./controllers/AppsController";
 import HealthController from "./controllers/HealthController";
-import Scheduler from "./services/CronService";
+// import Scheduler from "./services/CronService";
 import fastifySensible from "@fastify/sensible";
 import { addAppSchema, addAppScreenshot, getAppSchema } from "./schemas/AppSchema";
 import Logger from "./services/LoggerService";
@@ -25,6 +25,7 @@ async function bootstrap() {
   })
 
   server.register(fastifySensible);
+  const date = new Date(Date.now() + 5000); // 5 seconds from now
 
   // Routes
   // The route registration can be moved to a different file and looped over without having to increase the size of the index file
@@ -36,8 +37,9 @@ async function bootstrap() {
   // End Routes
 
   // Start background scheduler to take screenshots
-  const scheduler = new Scheduler(15);
-  scheduler.startTask();
+  // const scheduler = new Scheduler(15);
+  // scheduler.startTask();
+
 
   server.addHook('onClose', (_instance, done) => {
     console.log('server is closing');
@@ -48,7 +50,7 @@ async function bootstrap() {
   process.on('SIGINT', () => {
     console.log('Received SIGINT. Process will exit...');
     server.close(() => {
-      scheduler.stop();
+      // scheduler.stop();
       console.log('server closed');
       process.exit(0);
     });
@@ -58,7 +60,7 @@ async function bootstrap() {
   process.on('SIGTERM', () => {
     console.log('Received SIGTERM. Process will exit...');
     server.close(() => {
-      scheduler.stop();
+      // scheduler.stop();
       console.log('server closed');
       process.exit(0);
     });

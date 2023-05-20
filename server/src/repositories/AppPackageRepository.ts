@@ -50,12 +50,13 @@ async function findAppWithScreenshots(packageName: string) {
 
 async function insertApp(packageName: string, packageUrl: string) {
   try {
-    await db.package.create({
+    const appInserted = await db.package.create({
       data: {
         packageName: packageName,
         packageUrl: packageUrl,
       }
     })
+    return appInserted;
   } catch (err) {
     if (err instanceof Prisma.PrismaClientKnownRequestError) {
       if (err.code === 'P2002') {

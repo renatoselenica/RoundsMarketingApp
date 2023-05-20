@@ -7,16 +7,18 @@ import Logger from "../services/LoggerService";
 class Scheduler {
   private scheduler: ToadScheduler;
   private timer: number = 1;
+  private appPackageRepository: typeof AppPackageRepository;
 
   constructor(timer: number) {
     this.scheduler = new ToadScheduler();
     this.timer = timer;
+    this.appPackageRepository = AppPackageRepository;
   }
 
   public startTask() {
     // promise chain is being used inside task instead of async/await to avoid memory leaks
     const task = new AsyncTask('screenshot job', () => {
-      return AppPackageRepository.findAllApps().then((apps: IPackage[]) => {
+      return this.appPackageRepository.findAllApps().then((apps: IPackage[]) => {
         if (!apps) {
           Logger.getInstance().error('No apps found');
           return;

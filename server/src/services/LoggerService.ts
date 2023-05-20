@@ -7,6 +7,9 @@ class Logger {
   }
 
   public static getInstance(): FastifyBaseLogger {
+    if (!Logger.instance) {
+      throw new Error("Logger not initialized");
+    }
     return Logger.instance;
   }
 }
